@@ -12,11 +12,21 @@ const TodoList: React.FunctionComponent = (props) => {
     // Hook to select todos from Redux
     const todos: Task[] = useSelector(selectTodos);
 
+    // Add remove todos with use dispatch
+    const dispatch = useDispatch();
+
+    const removeTodo = (id: number) => {
+        dispatch({
+            type: DELETE_TODO,
+            id
+        });
+    };
+
     return (
         <div>
             <TodoForm />
             <ul>
-                {todos.map((task: Task, index: number) => <Todo text={task.text} key={index}></Todo>)}
+                {todos.map((task: Task, index: number) => <Todo removeTodo={() => removeTodo(task.id)} text={task.text} key={index}></Todo>)}
             </ul>
         </div>
     );
